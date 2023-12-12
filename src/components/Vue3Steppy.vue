@@ -55,7 +55,7 @@
         class="btn btn--default-2"
         type="button"
         @click="incrementStep"
-        v-if="props.step !== props.tabs.length"
+        v-if="props.step !== props.tabs.length && !props.tabs[props.step - 1].isHidden"
         :disabled="!props.tabs[props.step - 1].isValid"
       >
         {{ props.nextText }}
@@ -64,7 +64,7 @@
         class="btn btn--default-2"
         type="button"
         @click="finalize"
-        v-else
+        v-else-if="!props.tabs[props.step - 1].isHidden"
         :disabled="!props.tabs[props.step - 1].isValid || loading"
       >
         <span v-if="loading" class="loader"></span>
@@ -92,16 +92,19 @@ const props = defineProps({
         title: "Step 1",
         iconSuccess: null,
         isValid: true,
+        isHidden: false,
       },
       {
         title: "Step 2",
         iconSuccess: null,
         isValid: true,
+        isHidden: false,
       },
       {
         title: "Step 3",
         iconSuccess: null,
         isValid: true,
+        isHidden: false,
       },
     ]),
   },
